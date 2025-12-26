@@ -80,7 +80,7 @@ val baseVersion = project.findProperty("version") as String
 // --- Standard Project Configuration ---
 group = "ac.grim.grimac" // Or your desired group ID
 // VersionUtil appends commit/branch metadata if not a release build
-version = VersionUtil.compute(baseVersion)
+version = "1.0-SNAPSHOT"
 description = "GrimAPI"
 
 println("⚙️  Build flags     → release=${BuildFlags.release}")
@@ -109,19 +109,18 @@ allprojects {
     publishing {
         repositories {
             mavenLocal()
-            getEnvVar("MAVEN_REPO_URL")?.let { repoUrl ->
                 maven {
-                    name = getEnvVar("MAVEN_REPO_NAME") ?: "CustomMaven"
-                    url = uri(repoUrl)
+                    name = "Snapshots"
+                    url = uri(findProperty("kaizenUrl"))
                     credentials {
-                        username = getEnvVar("MAVEN_USERNAME") ?: ""
-                        password = getEnvVar("MAVEN_PASSWORD") ?: ""
+                        username = findProperty("kaizenUser") as String? ?: "kaizen"
+                        password = findProperty("kaizenPassword") as String? ?: "kaizen"
                     }
                 }
             }
         }
     }
-}
+
 
 publishing {
     publications.create<MavenPublication>("maven") {
