@@ -110,7 +110,7 @@ allprojects {
         repositories {
             mavenLocal()
                 maven {
-                    name = "Snapshots"
+                    name = "kaizenRepositorySnapshots"
                     url = uri(findProperty("kaizenUrl"))
                     credentials {
                         username = findProperty("kaizenUser") as String? ?: "kaizen"
